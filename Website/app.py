@@ -1,4 +1,4 @@
-from flask import Flask, render_template, request, redirect, url_for, flash
+from flask import Flask, render_template, request, redirect, url_for, flash , session
 import pandas as pd
 from pandas_datareader import data as pdr
 import yfinance as yf
@@ -6,7 +6,7 @@ from datetime import datetime
 from tabulate import tabulate
 
 app = Flask(__name__)
-app.secret_key = 'your_secret_key'
+app.secret_key = 'SEC'
 
 yf.pdr_override()
 
@@ -14,22 +14,31 @@ yf.pdr_override()
 def index():
     return render_template('index.html')
 
+
+@app.route('/analyzeNF', methods=['POST'])
+def analyzeNF():
+    with open(f"List.txt") as f:
+        data = f.read()
+    result = analyze_stocks(data,False)
+    if result:
+        flash('Analysis completed successfully', 'success')
+
+    return render_template('index.html', result=result)
+
 @app.route('/analyze', methods=['POST'])
 def analyze():
     result = False
-
     if request.method == 'POST':
         
-        for key in request.form:
-            if key == "fileName":
-        
-                fileName = request.form['fileName']
-                result = analyze_stocks(fileName,False)       
+        if len(list(request.form)) == 1:
+            fileName = request.form['fileName']
+            result = analyze_stocks(fileName,False)
 
-
-            else:
-                file = request.form['fileInput']
-                result = analyze_stocks(file,True)
+        else:
+            file = request.files['fileInput']
+            if not file:
+                flash('No File Detected', 'error')
+            result = analyze_stocks(file,True)
 
 
     if result:
@@ -40,7 +49,11 @@ def analyze():
 
 def RSI(tickerNS, ticker, Dict):
     startdate = datetime(2022, 1, 1)
+    
     data = pdr.get_data_yahoo(tickerNS, start=startdate)
+    if data.empty:
+        flash(f"{tickerNS[:-2]} not exits","error")
+
 
     momentum_period = 10
     bars_back = 150
@@ -97,18 +110,19 @@ def RSI(tickerNS, ticker, Dict):
 def STOCKS(fileName,Dict,bool):
     tickers_nse = []
     if not bool: 
-        try:
-            with open(fileName + ".txt") as f:
-                data = f.read()
-                tickers_nse = data.split(",")
-        except FileNotFoundError:
-            flash('File not found!', 'error')
+        if len(fileName) > 2:
+            data = fileName
+            tickers_nse = data.split(",")
+        else:
+            flash('Empty Field!', 'error')
             return False
         
     else:
-        file = request.files['fileInput']
-        data = file.read().decode("utf-8")
+        data = fileName.read().decode("utf-8")
         tickers_nse = data.split(",")
+    
+
+
 
 
     if len(tickers_nse) != 0 and tickers_nse[0] != "":
@@ -162,9 +176,6 @@ def analyze_stocks(fileName,bool):
     hold.extend([" "]* (max_length - len(hold)))
     nothold.extend([" "]* (max_length - len(nothold)))
 
-    
-
-    
     data = []
     for buy_stock, sell_stock, hold_stock, nothold_stock in zip(buy, sell, hold, nothold):
         data.append([buy_stock, sell_stock, hold_stock, nothold_stock])
@@ -176,7 +187,7 @@ def analyze_stocks(fileName,bool):
     with open("Table.txt", "w") as file:
         file.write(table)
 
-    # flash(data)
+
     return data
 
 

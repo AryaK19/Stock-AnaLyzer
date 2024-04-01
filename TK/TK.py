@@ -43,11 +43,13 @@ class StockAnalyzerApp:
         gap = 10
         RSIUpper = 61
         RSILower = 35
+        print(data["Close"].shape)
+        if data["Close"].shape[1]==1:
 
-        # Calculate Momentum
-        data['Momentum'] = data["Close"].diff(momentum_period - 1)
+            data['Momentum'] = data["Close"].diff(momentum_period - 1)
+      
 
-        #RSi calclate
+       
         delta = data["Close"].diff()
         up = delta.clip(lower=0)
         down = -1 * delta.clip(upper=0)
@@ -56,7 +58,7 @@ class StockAnalyzerApp:
         rs = average_up / average_down
         rsi = 100 - (100 / (1 + rs))
         data["RSI"] = rsi
-        # data = data.iloc[days:]
+   
         
 
         if len(data['RSI'])<5:

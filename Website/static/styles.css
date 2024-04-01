@@ -17,6 +17,10 @@ body {
     display:flex;  
     margin-bottom: 20px;
     transition: .2s;
+    position: fixed;
+
+    padding-left: 10px;
+    z-index: 1;
 }
 
 .nav:hover{
@@ -40,10 +44,13 @@ body {
 
 
 .container {
-    margin: 0 auto; /* Center horizontally */
+    margin: 100 auto; /* Center horizontally */
+    padding-top:70px;
     text-align: center;
     width: 100%;
     max-height: 1000px;
+
+    
     
 }
 
@@ -76,6 +83,7 @@ body {
 }
 
 .form input[type="text"] {
+    width: 400px;
     padding: 8px;
     margin: 0 10px;
     outline: none;
@@ -107,23 +115,38 @@ body {
     font-weight: bold;
 }
 
+
+.input-section0{
+    width: 170px;
+    padding-left: 300px;
+    padding-top: 140px;
+    float: left;
+}
+.input-section0 button{
+    width: 160px;
+}
+
 .input-section{
+    
     margin: 20px auto;
     width: 500px;
     height: 287px;
     justify-content: center;
-    /* display: flex; */
     align-items: center;
     background-color: #121212;
     box-shadow: 0 0 1px #02ac55,0 0 3px #02ac55;
     color: white;
     font-size: 0.6rem;
 
-
+    margin-left: auto; 
+    margin-right: auto; 
     padding-top: 2px;
     padding-bottom: 7px;
     
 }
+
+
+
 .input-section input{
     margin-top: 7px auto;
     
@@ -146,7 +169,7 @@ body {
 
 
 .alert {
-    width: 400px;
+    width: 480px;
     padding: 10px;
     margin: 30px auto;
     border-radius: 4px;
@@ -161,9 +184,9 @@ body {
 }
 
 .alert-error {
-    background-color: #ff26260b;
+    background-color: #ff262614;
     border: 1px solid #ebccd1;
-    color: #e0504e;
+    color: #eb514f;
 }
 
 
@@ -202,7 +225,7 @@ body {
 }
 
 .resultTable table {
-    width: 700px;
+    width: 800px;
     border-collapse: collapse;
 }
     
