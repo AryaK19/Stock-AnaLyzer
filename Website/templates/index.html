@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Stock Analyzer</title>
+    <link rel="stylesheet" href="static/styles.css">
+</head>
+<body>
+    <h1>Stock Analyzer</h1>
+    <form action="{{ url_for('analyze') }}" method="post">
+        <label for="fileName">Enter File Name:</label>
+        <input type="text" id="fileName" name="fileName">
+        <button type="submit">Analyze</button>
+    </form>
+    {% with messages = get_flashed_messages(with_categories=true) %}
+        {% if messages %}
+            {% for category, message in messages %}
+                <div class="alert alert-{{ category }}">{{ message }}</div>
+            {% endfor %}
+        {% endif %}
+    {% endwith %}
+    {% if result %}
+    <div class="resultTable">
+        <h2>Analysis Result</h2>
+        <table>
+            <tr>
+                <th>Buy</th>
+                <th>Sell</th>
+                <th>Hold</th>
+                <th>Down</th>
+            </tr>
+            {% for row in result %}
+            <tr>
+                <td>{{ row[0] }}</td>
+                <td>{{ row[1] }}</td>
+                <td>{{ row[2] }}</td>
+                <td>{{ row[3] }}</td>
+            </tr>
+            {% endfor %}
+        </table>
+    </div>
+    {% endif %}
+</body>
+</html>
