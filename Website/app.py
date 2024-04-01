@@ -16,12 +16,26 @@ def index():
 
 @app.route('/analyze', methods=['POST'])
 def analyze():
+    result = False
+
     if request.method == 'POST':
-        fileName = request.form['fileName']
-        result = analyze_stocks(fileName)
-        if result:
-            flash('Analysis completed successfully', 'success')
-        return render_template('index.html', result=result)
+        
+        for key in request.form:
+            if key == "fileName":
+        
+                fileName = request.form['fileName']
+                result = analyze_stocks(fileName,False)       
+
+
+            else:
+                file = request.form['fileInput']
+                result = analyze_stocks(file,True)
+
+
+    if result:
+        flash('Analysis completed successfully', 'success')
+
+    return render_template('index.html', result=result)
 
 
 def RSI(tickerNS, ticker, Dict):
@@ -80,33 +94,32 @@ def RSI(tickerNS, ticker, Dict):
 
     Dict.update({str(ticker): [datalast, dataPrev2, dataPrev3, dataPrev4, dataPrev5, buySell]})
 
-def STOCKS(fileName,Dict):
+def STOCKS(fileName,Dict,bool):
     tickers_nse = []
-    tickers_bse = []
-   
-    try:
-        with open(fileName + ".txt") as f:
-            data = f.read()
-            tickers_bse = data.split("//")
-            tickers_nse = tickers_bse[0].split(",")
-            tickers_bse = tickers_bse[1].split(",")
-    except FileNotFoundError:
-        flash('File not found!', 'error')
-        return False
+    if not bool: 
+        try:
+            with open(fileName + ".txt") as f:
+                data = f.read()
+                tickers_nse = data.split(",")
+        except FileNotFoundError:
+            flash('File not found!', 'error')
+            return False
         
+    else:
+        file = request.files['fileInput']
+        data = file.read().decode("utf-8")
+        tickers_nse = data.split(",")
+
+
     if len(tickers_nse) != 0 and tickers_nse[0] != "":
         for ticker in tickers_nse:
             tickerNS = ticker + ".NS"
             RSI(tickerNS, ticker ,Dict)
 
-    if len(tickers_bse) != 0 and tickers_bse[0] != "":
-        for ticker in tickers_bse:
-            ticker_BO = ticker + ".BO"
-            RSI(ticker_BO, ticker, Dict)
 
-def analyze_stocks(file_name):
+def analyze_stocks(fileName,bool):
     Dict = {}
-    STOCKS(file_name,Dict)
+    STOCKS(fileName,Dict,bool)
 
     buy = []
     sell = []

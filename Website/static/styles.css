@@ -1,89 +1,227 @@
 
 body {
     font-family: Arial, sans-serif;
-    background-color: #f0f0f0;
+    background-color: black;
     margin: 0;
     padding: 0;
+    height: 1000px;
 }
+
+.nav{
+    width:100%;
+    height:46px;
+    background-color: transparent;
+    backdrop-filter: blur(4px);
+    border-bottom: 1px solid #02ac55;
+    box-shadow: 0 0 0px #02ac55,0 0 0px #02ac55;
+    display:flex;  
+    margin-bottom: 20px;
+    transition: .2s;
+}
+
+.nav:hover{
+    transition: .2s;
+    height: 55px;
+    box-shadow: 0 0 2px #02ac55,0 0 7px #02ac55;
+}
+
+.logo{
+    width: 100%;
+    cursor: pointer;
+    padding-left: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.logo img{
+    height: 32px;
+   
+}
+
 
 .container {
-    width: 80%;
-    margin: 50px auto;
+    margin: 0 auto; /* Center horizontally */
     text-align: center;
+    width: 100%;
+    max-height: 1000px;
+    
 }
 
-h1 {
-    color: #333;
+.form{
+    width: 100%;
+    height: 65px;
+    justify-content: center;
+    display: flex;
+    background-color: #121212;
+    box-shadow: 0 0 1px #02ac55,0 0 3px #02ac55;
+}
+.form:hover{
+    box-shadow: 0 0 2px #02ac55,0 0 7px #02ac55;
+
 }
 
-form {
+.form form {
+    margin-top: 30px;
     margin-bottom: 20px;
+    display: flex;
+    align-items: center;
+    margin: 0 auto;
+    text-align: center;
+    
 }
 
-label {
+.form label {
+    color: white;
     font-weight: bold;
 }
 
-input[type="text"] {
+.form input[type="text"] {
     padding: 8px;
     margin: 0 10px;
-    border: 1px solid #ccc;
-    border-radius: 4px;
+    outline: none;
 }
 
-button {
+
+.button {
+    height: 35px;
+    width: 100px;
     padding: 8px 20px;
-    background-color: #333;
+    background-color: #58b969;
     color: #fff;
-    border: none;
-    border-radius: 4px;
     cursor: pointer;
+    border-radius: 30px;
+    border: none;
+    transition: .2s;
 }
 
-button:hover {
-    background-color: #555;
+.button:hover {
+    box-shadow: 0 0 5px #02ac55,0 0 20px #02ac55;
+    background-color: #66f1a9;
+    color: black;
+    font-weight: bold;
+    transition: .2s;
 }
+
+.container h3{
+    color: white;
+    font-weight: bold;
+}
+
+.input-section{
+    margin: 20px auto;
+    width: 500px;
+    height: 287px;
+    justify-content: center;
+    /* display: flex; */
+    align-items: center;
+    background-color: #121212;
+    box-shadow: 0 0 1px #02ac55,0 0 3px #02ac55;
+    color: white;
+    font-size: 0.6rem;
+
+
+    padding-top: 2px;
+    padding-bottom: 7px;
+    
+}
+.input-section input{
+    margin-top: 7px auto;
+    
+    width: 90%;
+    height:200px;
+    background-color: transparent;
+    color: #02ac55;
+    resize: none;
+    border-radius: 20px;
+    box-shadow: 0 0 1px #02ac55,0 0 3px #02ac55;
+}
+.input-section:hover{
+    box-shadow: 0 0 2px #02ac55,0 0 7px #02ac55;
+}
+
+.input-section button{
+    margin-top: 10px;
+}
+
+
 
 .alert {
+    width: 400px;
     padding: 10px;
-    margin-top: 20px;
+    margin: 30px auto;
     border-radius: 4px;
+    text-align: center;
+    
 }
 
 .alert-success {
-    background-color: #dff0d8;
+    background-color: #54ff1012;
     border: 1px solid #d6e9c6;
-    color: #3c763d;
+    color: #93ff93;
 }
 
 .alert-error {
-    background-color: #f2dede;
+    background-color: #ff26260b;
     border: 1px solid #ebccd1;
-    color: #a94442;
+    color: #e0504e;
 }
+
+
+.result-section {
+    margin-top: 30px;
+}
+
 
 .resultTable {
+    width: 100%;
     margin: 0 auto;
     text-align: center;
-    border-collapse: collapse;
     width: max-content;
+    border-collapse: collapse;
+    color: #ccc;
+}
+.resultTable h2 {
+    height: 40px;
+    width: 100%;
+    background-color: #121212;
+    padding-top: 10px;
+    text-align: center;
+    color: #02ac55;
+    border-radius: 25px;
+    box-shadow: 0 0 1px #02ac55,0 0 3px #02ac55;
 }
 
+.resultTable h2:hover{
+    box-shadow: 0 0 2px #02ac55,0 0 7px #02ac55;
+
+}
 .resultTable table, th, td {
     font-size: 1rem;
     padding: 5px;
+    color: #ccc;
 }
+
 .resultTable table {
+    width: 700px;
     border-collapse: collapse;
-    /* border:1px solid black; */
-    margin: 0;
 }
+    
+.resultTable th, .resultTable td {
+    padding: 10px;
+    border: 1px solid #ffffff;
+}
+    
 .resultTable td,th {
-    border: 1px solid black;
+    border: 1px solid rgb(255, 255, 255);
     padding: 8px;
     margin: 0;
-}
-.resultTable tr:hover {
-    background-color: #D6EEEE;
     
-} 
+}
+.resultTable th {
+    background-color: #222326;
+}
+
+.resultTable tr:hover {
+    background-color: #0a4c2a93;
+}  
+
